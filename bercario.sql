@@ -1,0 +1,46 @@
+CREATE TABLE TbEspecialidade (
+	CdEspecialidade INTEGER NOT NULL,
+	NmEspecialidade VARCHAR(50) NOT NULL,
+	PRIMARY KEY (CdEspecialidade));
+
+CREATE TABLE TbMae (
+	CdMae INTEGER NOT NULL,
+    NmMae VARCHAR(100) NOT NULL,
+    Endereco VARCHAR(255),
+    DtNasc DATE NOT NULL,
+    Telefone VARCHAR(11) NOT NULL,
+    PRIMARY KEY (CdMae));
+
+CREATE TABLE TbMedico (
+	CdMedico INTEGER NOT NULL,
+    NmMedico VARCHAR(100) NOT NULL,
+    CRM CHAR(6) NOT NULL,
+    Celular CHAR(11) NOT NULL,
+    CdEspecialidade INTEGER NOT NULL,
+    PRIMARY KEY (CdMedico),
+    FOREIGN KEY (CdEspecialidade) REFERENCES TbEspecialidade(CdEspecialidade));
+    
+CREATE TABLE TbBebe (
+	CdBebe INTEGER NOT NULL,
+    NmBebe VARCHAR(100) NOT NULL,
+    DtNasc DATE NOT NULL,
+    Peso NUMERIC(4,3) NOT NULL,
+    Altura INTEGER NOT NULL,
+    CdMedico INTEGER NOT NULL,
+    CdMae INTEGER NOT NULL,
+    PRIMARY KEY (CdBebe),
+    FOREIGN KEY (CdMedico) REFERENCES TbMedico(CdMedico),
+    FOREIGN KEY (CdMae) REFERENCES TbMae(CdMae));
+
+ALTER TABLE TbBebe
+ADD Sexo CHAR NOT NULL;
+
+ALTER TABLE TbMedico
+ADD Sexo CHAR NOT NULL,
+ADD CPF CHAR(11) NOT NULL;
+
+ALTER TABLE TbMae
+DROP Endereco,
+ADD CPF CHAR(11) NOT NULL;
+
+DROP TABLE TbBebe;
